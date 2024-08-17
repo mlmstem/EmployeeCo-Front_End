@@ -2,7 +2,16 @@
 
 This project frontend was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
 
-Employee Co is an mini Sass Employee and task mangement software developed through Angular + Typescript on Frontend and C# .net on backend maintaining a MySQL database on AWS RDS
+Employee Co is an mini Sass Employee and task mangement software developed through **Angular + Typescript** on Frontend and **C# .net** on backend maintaining a **MySQL** database on **AWS RDS**
+
+
+
+## Tech stacks:
+
+**UI** Angular material UI, Styling: Tailwind CSS
+**Front-End** Angular, Typescript, Payment integration on Frontend: Paypal API, Frontend Forum management: OpenAI API, Disqus API. security: role-guard
+**Back-End** C#, .NET, Security: JWT Bearer Authorization, Backend-data Management: OpenAI api. Database: sqlserver MySQL RDS database managed on MySQL workbench.
+**DEVOPS** AWS front-end is deployed on S3 buckets uses auto-scaling, Backend is Dockerized and deployed on EC2 instance under VPC routes tables
 
 
 ## Development server
