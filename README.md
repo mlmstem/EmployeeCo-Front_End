@@ -17,7 +17,21 @@ Employee Co is an mini Sass Employee and task mangement software developed throu
 **Back-End**:   C#, .NET, Security: JWT Bearer Authorization, Backend-data Management: OpenAI api. Database: sqlserver MySQL RDS database managed on MySQL workbench.
 
 
-**DEVOPS**:   AWS front-end is deployed on S3 buckets uses auto-scaling, Backend is Dockerized and deployed on EC2 instance under VPC routes tables.  
+**DEVOPS**:   AWS,   front-end is deployed on S3 buckets uses auto-scaling, Backend is Dockerized and deployed on EC2 instance under VPC routes tables.  
+
+
+
+## Product-Overview:
+
+
+
+
+
+
+
+
+
+
 
 
 ## Development server
