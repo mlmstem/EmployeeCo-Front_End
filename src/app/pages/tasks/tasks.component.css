@@ -1,0 +1,15 @@
+.hidden {
+  display: none;
+}
+
+.bg-red-600 {
+  background-color: #e3342f;
+}
+
+.bg-yellow-600 {
+  background-color: #f6993f;
+}
+
+.bg-gray-700 {
+  background-color: #4a5568;
+}

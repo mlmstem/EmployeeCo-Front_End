@@ -1,0 +1,56 @@
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" (click)="closeModal()">
+  <div class="bg-gray-900 rounded-lg p-8 w-96 shadow-lg" (click)="$event.stopPropagation()">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold text-white">Feedback</h2>
+      <button class="text-white text-2xl" (click)="closeModal()">&times;</button>
+    </div>
+    <h3 class="text-2xl font-bold text-white mb-4">How are you feeling about this task?</h3>
+    <p class="text-gray-400 mb-6">Your input is valuable in helping us better understand your needs and tailor our service accordingly.</p>
+
+    <!-- Rating Stars -->
+    <div class="flex justify-center mb-4">
+      <div class="flex space-x-2">
+        <span *ngFor="let star of [1, 2, 3, 4, 5]" (click)="rating = star" class="cursor-pointer">
+          <svg
+            [ngClass]="{'text-gray-500': rating < star, 'text-yellow-400': rating >= star}"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            class="w-10 h-10"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 17.27l5.18 3.09-1.64-5.81L21 9.24l-5.86-.51L12 3 8.86 8.73 3 9.24l4.46 5.31L5.82 20.36 12 17.27z"
+            />
+          </svg>
+        </span>
+      </div>
+    </div>
+
+    <div class="flex justify-between mb-6">
+      <span class="text-gray-500">Sorry</span>
+      <span class="text-gray-500">Medium</span>
+      <span class="text-gray-500">Great</span>
+    </div>
+
+    <!-- Textarea for feedback -->
+    <textarea
+      class="w-full p-4 rounded-lg bg-gray-800 text-white focus:outline-none"
+      placeholder="Add a Comment..."
+      [(ngModel)]="feedback"
+    ></textarea>
+
+    <!-- Submit Button -->
+    <button
+      class="mt-6 w-full bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-green-600 transition focus:outline-none"
+      (click)="submitFeedback()"
+    >
+      Submit Now
+    </button>
+  </div>
+</div>
+
+

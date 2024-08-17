@@ -1,0 +1,14 @@
+<app-navbar />
+
+<div class="flex">
+  <div *ngIf="isLoggedIn" class="sticky top-16 z-110 bg-opacity-90">
+
+    <app-sidebar [isCollapsed]="isSidebarCollapsed" (toggleSidebar)="toggleSidebar()"></app-sidebar>
+  </div>
+
+  <div class="flex-grow">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+

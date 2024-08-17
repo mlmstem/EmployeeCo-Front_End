@@ -1,0 +1,46 @@
+<div class="edit-user-dialog p-6 bg-gray-700 rounded-md">
+  <h2 class="dialog-title mb-4 text-xl font-bold text-white">Edit User</h2>
+  <form [formGroup]="userForm" (ngSubmit)="onSave()" >
+    <div class="mb-4">
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label class="text-gray-800 font-semibold">Full Name</mat-label>
+        <input matInput placeholder="Full Name" formControlName="fullName" class="text-gray-300 bg-gray-700">
+        <mat-icon matPrefix class="text-gray-400">person</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="mb-4">
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label class="text-gray-800 font-semibold">Email</mat-label>
+        <input matInput placeholder="Email" formControlName="email" class="text-gray-300 bg-gray-700">
+        <mat-icon matPrefix class="text-gray-400">email</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="mb-4">
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label class="text-gray-800 font-semibold">Phone Number</mat-label>
+        <input matInput placeholder="Phone Number" formControlName="phoneNumber" class="text-gray-300 bg-gray-700">
+        <mat-icon matPrefix class="text-gray-400">phone</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="mb-6">
+      <mat-form-field appearance="fill" class="w-full">
+        <mat-label class="text-gray-800 font-semibold">Roles</mat-label>
+        <mat-select formControlName="roles" multiple class="text-gray-300">
+          <mat-option *ngFor="let role of roles$ | async" [value]="role.name" class="text-gray-300">
+            {{ role.name }}
+          </mat-option>
+        </mat-select>
+        <mat-icon matPrefix class="text-gray-400">groups</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="dialog-actions flex justify-between">
+      <button mat-stroked-button color="primary" (click)="onCancel()" class="text-white">Cancel</button>
+      <button mat-flat-button color="primary" type="submit" [disabled]="!userForm.valid" class="text-white">Save</button>
+    </div>
+  </form>
+</div>
+

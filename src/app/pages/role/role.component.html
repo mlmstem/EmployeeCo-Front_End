@@ -1,0 +1,60 @@
+
+<div class="min-h-screen bg-gray-700 flex flex-col items-center">
+<div class="mx-auto my-10 rounded-md p-5 bg-slate-600 shadow-md max-w-3xl">
+  <h1 class="text-2xl font-bold mb-5 text-white">Role Management</h1>
+
+  <div class="mb-5">
+    <h2 class="text-lg font-semibold mb-3 text-gray-200">Add a new role</h2>
+    <div class="flex items-center gap-3">
+      <mat-form-field class="w-2/3">
+        <input matInput placeholder="Enter role name" [(ngModel)]="role.roleName" class="text-gray-800 bg-gray-300">
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="bg-green-500 text-white font-semibold py-2 px-6 rounded hover:bg-green-600" (click)="createRole(role)">
+        Add Role
+      </button>
+    </div>
+    <div *ngIf="errorMessage" class="text-red-400 mt-2">{{ errorMessage }}</div>
+  </div>
+
+  <div class="mb-5">
+    <h2 class="text-lg font-semibold mb-3 text-gray-200">Assign Role to Users</h2>
+    <div class="flex items-center gap-3">
+      <mat-form-field class="flex-grow">
+        <mat-select placeholder="Select a user" [(value)]="selectedUser" class="text-gray-800 ">
+          <mat-option *ngFor="let user of users$ | async" [value]="user.id">
+            {{ user.fullName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="flex-grow">
+        <mat-select placeholder="Select a role" [(value)]="selectedRole" class="text-gray-800 ">
+          <mat-option *ngFor="let role of role$ | async" [value]="role.id">
+            {{ role.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary" class="bg-blue-500 text-white font-semibold py-2 px-6 rounded hover:bg-blue-600" [disabled]="!selectedUser || !selectedRole" (click)="assignRole()">
+        Assign
+      </button>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="text-lg font-bold mb-3 text-white">Existing Roles</h2>
+    <div *ngFor="let role of role$ | async" class="flex items-center justify-between p-3 mb-3 bg-gray-500 rounded">
+      <div class="flex items-center gap-2 text-white">
+        <span>{{ role.name }}</span>
+        <mat-icon class="text-gray-400">people</mat-icon>
+        <span class="text-gray-400">({{ role.totalUsers }})</span>
+      </div>
+      <button mat-stroked-button color="warn" class="bg-red-500 text-white font-semibold py-2 px-6 rounded hover:bg-red-600" (click)="deleteRole(role.id)">
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+

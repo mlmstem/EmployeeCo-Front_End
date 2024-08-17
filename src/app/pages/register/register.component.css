@@ -1,0 +1,29 @@
+.register-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Ensure the container covers the full viewport height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Ensure the pseudo-element does not overflow */
+}
+
+.register-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/assets/bg8.webp');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.9; /* Reduce the opacity of the image */
+  z-index: 1; /* Place the pseudo-element below the content */
+}
+
+.register-container form {
+  position: relative;
+  z-index: 2; /* Ensure the form is above the pseudo-element */
+  background: white; /* Ensure the form's background is opaque */
+}

@@ -1,0 +1,15 @@
+.sidebar {
+  transition: width 0.3s, padding 0.3s;
+  width: 250px; /* Default width */
+}
+
+.collapsed {
+  width: 60px; /* Narrow width when collapsed */
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60px; /* Collapse sidebar on smaller screens */
+    padding: 0.5rem 0;
+  }
+}

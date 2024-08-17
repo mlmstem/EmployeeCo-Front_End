@@ -1,0 +1,101 @@
+<div class="min-h-screen bg-gray-900 p-6 flex flex-col items-center">
+  <h2 class="text-3xl font-bold text-white mb-6">Your Tasks</h2>
+
+  <!-- Overdue Tasks Section -->
+  <div class="mb-10 w-full lg:w-2/3">
+    <h3 class="text-xl font-semibold text-red-500 mb-4">Overdue Tasks</h3>
+    <div *ngIf="overdueTasks.length === 0" class="text-gray-400">No overdue tasks.</div>
+    <div *ngFor="let task of overdueTasks" class="mb-4">
+      <div class="bg-gray-800 p-6 rounded-lg shadow-lg cursor-pointer flex flex-col space-y-4"
+        (click)="toggleAccordion(task.id)">
+        <div class="flex justify-between items-center">
+          <h4 class="text-white text-2xl font-semibold">{{ task.title }}</h4>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            class="w-6 h-6 transform transition-transform"
+            [ngClass]="{'rotate-180': expandedTasks.includes(task.id)}">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-gray-300 text-lg">Priority: <span
+              [ngClass]="task.highPriority ? 'text-red-400' : 'text-gray-400'">{{ task.highPriority ? 'High' : 'Normal' }}</span></p>
+        </div>
+        <div class="flex justify-between items-center text-gray-400">
+          <div class="flex items-center">
+            <img src="/assets/clock.svg" alt="Deadline Icon" class="w-5 h-5 mr-2 text-white">
+            <span>Deadline: {{ task.deadline | date: 'MMM dd, yyyy' }}</span>
+          </div>
+          <div class="flex items-center">
+            <img src="/assets/hours_required.svg" alt="Expected Hours Icon" class="w-5 h-5 mr-2 text-white">
+            <span>Expected Hours: {{ task.expectedHours }}</span>
+          </div>
+        </div>
+        <div class="flex justify-between items-center">
+          <button
+            class="bg-yellow-400 text-gray-800 px-4 py-2 rounded-lg shadow hover:bg-yellow-500 transition focus:outline-none"
+            (click)="$event.stopPropagation()">
+            {{ calculateDaysRemaining(task.deadline) }}
+          </button>
+          <button (click)="markAsComplete(task); $event.stopPropagation()"
+            class="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition focus:outline-none flex items-center">
+            <img src="/assets/tick.svg" alt="Check Icon" class="w-4 h-4 mr-2"> Mark as Complete
+          </button>
+        </div>
+      </div>
+      <div id="task-{{ task.id }}" class="hidden bg-gray-700 p-4 rounded-lg shadow-inner mt-2">
+        <p class="text-gray-300">Description: {{ task.description }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ongoing Tasks Section -->
+  <div class="w-full lg:w-2/3">
+    <h3 class="text-xl font-semibold text-yellow-400 mb-4">Ongoing Tasks</h3>
+    <div *ngIf="ongoingTasks.length === 0" class="text-gray-400">No ongoing tasks.</div>
+    <div *ngFor="let task of ongoingTasks" class="mb-4">
+      <div class="bg-gray-800 p-6 rounded-lg shadow-lg cursor-pointer flex flex-col space-y-4"
+        (click)="toggleAccordion(task.id)">
+        <div class="flex justify-between items-center">
+          <h4 class="text-white text-2xl font-semibold">{{ task.title }}</h4>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+            class="w-6 h-6 transform transition-transform"
+            [ngClass]="{'rotate-180': expandedTasks.includes(task.id)}">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-gray-300 text-lg">Priority: <span
+              [ngClass]="task.highPriority ? 'text-red-400' : 'text-gray-400'">{{ task.highPriority ? 'High' : 'Normal' }}</span></p>
+        </div>
+        <div class="flex justify-between items-center text-gray-400">
+          <div class="flex items-center">
+            <img src="/assets/clock.svg" alt="Deadline Icon" class="w-5 h-5 mr-2 text-white">
+            <span>Deadline: {{ task.deadline | date: 'MMM dd, yyyy' }}</span>
+          </div>
+          <div class="flex items-center">
+            <img src="/assets/hours_required.svg" alt="Expected Hours Icon" class="w-5 h-5 mr-2 text-white">
+            <span>Expected Hours: {{ task.expectedHours }}</span>
+          </div>
+        </div>
+        <div class="flex justify-between items-center">
+          <button
+            class="bg-yellow-400 text-gray-800 px-4 py-2 rounded-lg shadow hover:bg-yellow-500 transition focus:outline-none"
+            (click)="$event.stopPropagation()">
+            {{ calculateDaysRemaining(task.deadline) }}
+          </button>
+          <button (click)="markAsComplete(task); $event.stopPropagation()"
+            class="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition focus:outline-none flex items-center">
+            <img src="/assets/tick.svg" alt="Check Icon" class="w-4 h-4 mr-2"> Mark as Complete
+          </button>
+        </div>
+      </div>
+      <div id="task-{{ task.id }}" class="hidden bg-gray-700 p-4 rounded-lg shadow-inner mt-2">
+        <p class="text-gray-300">Description: {{ task.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

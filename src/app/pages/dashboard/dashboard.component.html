@@ -1,0 +1,98 @@
+<div class="min-h-screen p-6 bg-gray-100 grid grid-cols-2 gap-6">
+  <!-- Tasks This Month -->
+  <div class="bg-gradient-to-r from-zinc-700 to-slate-800 p-6 rounded-lg shadow-md flex flex-col justify-between text-white">
+    <div class="flex justify-between items-center mb-4">
+      <div class="flex items-center space-x-2">
+        <div class="flex items-center justify-center w-10 h-10 bg-blue-500 rounded-full ">
+          <img src="/assets/task.svg" alt="Tasks Icon" class="w-6 h-6 border-white">
+        </div>
+        <h2 class="text-xl font-bold">Tasks This Month</h2>
+      </div>
+      <button [routerLink]="['/tasks']" routerLinkActive="router-link-active"  routerLinkActive="router-link-active"  class="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">See All</button>
+    </div>
+    <div class="space-y-4 overflow-y-auto">
+      <div *ngFor="let task of tasksThisMonth" class="flex justify-between items-center p-4 rounded-lg bg-gray-700 hover:bg-gray-200 transition text-white hover:text-slate-600 transition">
+        <div>
+          <h3 class="font-semibold">{{ task.title }}</h3>
+          <p class="text-gray-500">{{ task.deadline | date:'dd MMM, yyyy' }}</p>
+        </div>
+        <button class="text-blue-500 border border-blue-500 py-1 px-3 rounded-lg hover:bg-blue-500 hover:text-white transition">View</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Calendar -->
+  <div class="bg-gradient-to-r from-zinc-700 to-slate-800 p-6 rounded-lg shadow-md flex flex-col">
+    <div class="flex justify-between items-center mb-4">
+      <div class="flex items-center space-x-2">
+        <div class="flex items-center justify-center w-10 h-10 bg-blue-500 rounded-full border-white">
+          <img src="/assets/calendar.svg" alt="Calendar Icon" class="w-6 h-6">
+        </div>
+        <h2 class="text-xl font-bold text-white">Calendar</h2>
+      </div>
+      <select [(ngModel)]="selectedMonth" class="bg-blue-500 py-2 px-4 rounded-lg border border-blue-600 focus:outline-none">
+        <option>{{ previousMonth }}</option>
+        <option>{{ currentMonth }}</option>
+        <option>{{ nextMonth }}</option>
+      </select>
+    </div>
+
+    <div class="border-b border-gray-400 mb-4"></div>
+
+    <div class="grid grid-cols-7 gap-2 text-center font-semibold text-white mb-2">
+      <div *ngFor="let day of dayHeaders">{{ day }}</div>
+    </div>
+
+    <div class="grid grid-cols-7 gap-4 mt-4 overflow-y-auto">
+      <div *ngFor="let date of currentMonthDates" [ngClass]="getBackgroundColor(date)" class="w-10 h-10 flex items-center justify-center rounded-full">
+        {{ date.getDate() }}
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Task Completions -->
+  <div class="bg-gradient-to-r from-zinc-700 to-slate-800 p-6 rounded-lg shadow-md text-white">
+    <div class="flex justify-between items-center mb-4">
+      <div class="flex items-center space-x-2">
+        <div class="flex items-center justify-center w-10 h-10 bg-blue-500 rounded-full border-white">
+          <img src="/assets/task-complete.svg" alt="Completion Icon" class="w-6 h-6">
+        </div>
+        <h2 class="text-xl font-bold">Task Completions</h2>
+      </div>
+    </div>
+    <p class="text-gray-500">Overdue Tasks: {{ overdueTasks }} ({{ overduePercentage.toFixed(1) }}%)</p>
+    <p class="text-gray-500">Completed Tasks: {{ completedTasks }} ({{ completedPercentage.toFixed(1) }}%)</p>
+    <p class="text-purple-500 mt-2">Assigned {{ totalTasksThisMonth }} Tasks This Month</p>
+    <div class="relative h-4 mt-4 w-full bg-gray-300 rounded-full overflow-hidden">
+      <div class="absolute h-full bg-yellow-500 " [style.width]="overduePercentage + '%'"></div>
+      <div class="absolute h-full bg-green-500" [style.width]="completedPercentage + '%'"></div>
+    </div>
+  </div>
+
+  <!-- You Averaged Ratings -->
+  <div class="bg-gradient-to-r from-zinc-700 to-slate-800 p-6 rounded-lg shadow-md text-white">
+    <div class="flex justify-between items-center mb-4">
+      <div class="flex items-center space-x-2">
+        <div class="flex items-center justify-center w-10 h-10 bg-yellow-500 rounded-full border-white">
+          <img src="/assets/rating.svg" alt="Ratings Icon" class="w-6 h-6">
+        </div>
+        <h2 class="text-xl font-bold">You Averaged Ratings</h2>
+      </div>
+    </div>
+    <div class="flex justify-center items-center mb-4">
+      <span class="text-yellow-500 text-2xl">★</span>
+      <span class="text-yellow-500 text-2xl">★</span>
+      <span class="text-yellow-500 text-2xl">★</span>
+      <span class="text-yellow-500 text-2xl">★</span>
+      <span class="text-yellow-500 text-2xl">★</span>
+      <span class="text-gray-300 text-2xl">★</span>
+    </div>
+    <p class="text-gray-500">You have completed the recent tasks incredibly well.</p>
+    <p class="text-gray-100 mt-2">You scored an average of <strong>4.55</strong> amongst all the 24 completed tasks.</p>
+  </div>
+</div>
+
+
+

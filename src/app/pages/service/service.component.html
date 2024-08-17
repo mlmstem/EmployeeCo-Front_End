@@ -1,0 +1,105 @@
+<div class="min-h-screen bg-gray-900 flex flex-col items-center py-10">
+  <!-- Header Section -->
+  <div class="text-center mb-8">
+    <h1 class="text-4xl font-semibold text-white">Plans and Pricing</h1>
+    <p class="text-gray-600 mt-2">Choose the right option for your work and develop your project.</p>
+    <div class="mt-4">
+      <button
+        class="px-4 py-2 rounded-full mx-1"
+        [ngClass]="{
+          'bg-blue-500 text-white': !isYearly,
+          'border border-blue-500 text-blue-500': isYearly
+        }"
+        (click)="setPricing(false)"
+      >
+        Pay Monthly
+      </button>
+      <button
+        class="px-4 py-2 rounded-full mx-1"
+        [ngClass]="{
+          'bg-blue-500 text-white': isYearly,
+          'border border-blue-500 text-blue-500': !isYearly
+        }"
+        (click)="setPricing(true)"
+      >
+        Pay Yearly
+      </button>
+    </div>
+  </div>
+
+  <!-- Pricing Cards Section -->
+  <div class="flex flex-wrap justify-center gap-6">
+    <!-- Basic Plan Card -->
+    <div *ngIf="showBasicCard" class="w-full sm:w-64 bg-white rounded-lg shadow-md p-6 hover:bg-blue-500 hover:text-white hover:shadow-lg transition">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-semibold">Basic</h2>
+        <div class="text-gray-600">1 Admin</div>
+      </div>
+      <p class="mt-2">For anyone who plans to use the service for personal purposes.</p>
+      <div class="mt-6">
+        <span class="text-3xl font-bold">
+          {{ isYearly ? '$50' : '$6' }}
+        </span>
+        <span>/per {{ isYearly ? 'year' : 'month' }}</span>
+      </div>
+      <ngx-paypal [config]="payPalConfigBasic"></ngx-paypal>
+      <ul class="mt-4">
+        <li>✔ Limited to 5 Members</li>
+        <li>✔ Only one custom role creation</li>
+        <li>✔ No File upload allowed</li>
+        <li>✔ Support Chat</li>
+      </ul>
+      <a href="#" class="text-blue-500 mt-4 block hover:text-blue-700 transition">Learn more ></a>
+    </div>
+
+    <!-- Plus Plan Card -->
+    <div *ngIf="showPlusCard" class="w-full sm:w-64 bg-white rounded-lg shadow-md p-6 hover:bg-blue-500 hover:text-white hover:shadow-lg transition">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-semibold">Plus</h2>
+        <div class="text-gray-600">5 Admin</div>
+      </div>
+      <p class="mt-2">For a small team who need the service for commercial use.</p>
+      <div class="mt-6">
+        <span class="text-3xl font-bold">
+          {{ isYearly ? '$99' : '$19' }}
+        </span>
+        <span>/per {{ isYearly ? 'year' : 'month' }}</span>
+      </div>
+      <ngx-paypal [config]="payPalConfigPlus"></ngx-paypal>
+      <ul class="mt-4">
+        <li>✔ Unlimited Members</li>
+        <li>✔ Limited number of role creations</li>
+        <li>✔ Up to 15 GB Storage for all the monthly files</li>
+        <li>✔ Support Chat</li>
+      </ul>
+      <a href="#" class="text-yellow-300 mt-4 block hover:text-yellow-400 transition">Learn more ></a>
+    </div>
+
+    <!-- Pro Plan Card -->
+    <div *ngIf="showProCard" class="w-full sm:w-64 bg-white rounded-lg shadow-md p-6 hover:bg-blue-500 hover:text-white hover:shadow-lg transition">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-semibold">Pro</h2>
+        <div class="text-gray-500">15 Admin</div>
+      </div>
+      <p class="mt-2">For a large company to keep track of everyone's work process.</p>
+      <div class="mt-6">
+        <span class="text-3xl font-bold">
+          {{ isYearly ? '$199' : '$39' }}
+        </span>
+        <span>/per {{ isYearly ? 'year' : 'month' }}</span>
+      </div>
+      <ngx-paypal [config]="payPalConfigPro"></ngx-paypal>
+      <ul class="mt-4">
+        <li>✔ Unlimited members</li>
+        <li>✔ Unlimited number of role creations</li>
+        <li>✔ Unlimited disk storage</li>
+        <li>✔ Personal Support Manager</li>
+      </ul>
+      <a href="#" class="text-blue-500 mt-4 block hover:text-blue-700 transition">Learn more ></a>
+    </div>
+  </div>
+</div>
+
+
+
+

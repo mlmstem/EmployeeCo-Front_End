@@ -1,0 +1,18 @@
+.sidebar {
+  position: relative; /* Ensure absolute positioning for the toggle button */
+}
+
+.collapsed .menu-item span {
+  display: none; /* Hide text when collapsed */
+}
+
+.collapsed .menu-item {
+  justify-content: center; /* Center icons when collapsed */
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60px; /* Collapse sidebar on smaller screens */
+    padding: 0.5rem 0;
+  }
+}

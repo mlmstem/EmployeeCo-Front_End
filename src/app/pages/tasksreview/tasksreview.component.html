@@ -1,0 +1,43 @@
+<div class="min-h-screen bg-gray-900 p-6 flex flex-col items-center">
+  <h2 class="text-3xl font-bold text-white mb-6">Completed Tasks</h2>
+
+  <div class="w-full lg:w-2/3">
+
+    <button (click)="openCreateTaskModal()" class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow mb-6 hover:bg-blue-600 transition focus:outline-none">
+      Create New Task
+    </button>
+
+    <div *ngIf="completedTasks.length === 0" class="text-gray-400">No completed tasks found.</div>
+    <div *ngFor="let task of completedTasks" class="mb-4">
+      <div class="bg-gray-800 p-6 rounded-lg shadow-lg cursor-pointer flex flex-col space-y-4">
+        <div class="flex justify-between items-center">
+          <h4 class="text-white text-2xl font-semibold flex-1 mr-4">{{ task.title }}</h4>
+          <div class="text-sm flex items-center ml-4">
+            <span class="text-gray-400 mr-2">Completed on:</span>
+            <span class="font-bold bg-blue-500 rounded-md px-3 py-1 text-white">
+              {{ task.completionDate | date: 'MMM dd, yyyy' }}
+            </span>
+          </div>
+        </div>
+        <div class="flex justify-between items-center">
+          <p class="text-gray-300 text-lg">Priority:
+            <span [ngClass]="task.highPriority ? 'text-red-400' : 'text-gray-400'">
+              {{ task.highPriority ? 'High' : 'Normal' }}
+            </span>
+          </p>
+          <button (click)="writeFeedback(task)"
+            class="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-600 transition focus:outline-none flex items-center">
+            <img src="/assets/rate.svg" alt="Feedback Icon" class="w-4 h-4 mr-2"> Write Feedback
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feedback Modal -->
+  <app-feedback-form *ngIf="showModal" [taskId]="selectedTaskId" (close)="closeModal()"></app-feedback-form>
+  <app-create-task-modal *ngIf="showCreateTaskModal" (close)="closeCreateTaskModal()" (taskCreated)="onTaskCreated()"></app-create-task-modal>
+</div>
+
+
+

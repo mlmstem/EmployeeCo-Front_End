@@ -1,0 +1,51 @@
+<!-- src/app/components/create-task-modal/create-task-modal.component.html -->
+<div class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center">
+  <div class="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-lg">
+    <h2 class="text-2xl font-bold text-white mb-4">Create New Task</h2>
+    <form (ngSubmit)="createTask()">
+      <div class="mb-4">
+        <label class="block text-gray-300">Title</label>
+        <input type="text" [(ngModel)]="task.title" name="title" class="w-full p-2 rounded bg-gray-700 text-white" required />
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-300">Description</label>
+        <textarea [(ngModel)]="task.description" name="description" class="w-full p-2 rounded bg-gray-700 text-white"></textarea>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-300">Expected Hours</label>
+        <input type="number" [(ngModel)]="task.expectedHours" name="expectedHours" class="w-full p-2 rounded bg-gray-700 text-white" required />
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-300">Deadline</label>
+        <input type="date" [(ngModel)]="task.deadline" name="deadline" class="w-full p-2 rounded bg-gray-700 text-white" required />
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-gray-300">Priority</label>
+        <div class="flex gap-4">
+          <button type="button" (click)="setPriority('High')" [ngClass]="task.highPriority ? 'bg-orange-500' : 'bg-gray-600'" class="py-2 px-4 rounded-lg text-white flex items-center">
+            <span>High</span>
+          </button>
+          <button type="button" (click)="setPriority('Normal')" [ngClass]="!task.highPriority ? 'bg-green-500' : 'bg-gray-600'" class="py-2 px-4 rounded-lg text-white flex items-center">
+            <span>Normal</span>
+          </button>
+        </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-300">Assignees</label>
+        <mat-form-field appearance="fill" class="w-full bg-gray-700 text-gray-300">
+          <mat-select placeholder="Select assignees" [(ngModel)]="selectedAssignees" name="assignees" multiple>
+            <mat-option *ngFor="let user of users" [value]="user">
+              {{ user.fullName }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="flex justify-end gap-4">
+        <button type="button" (click)="closeModal()" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">Cancel</button>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Create Task</button>
+      </div>
+    </form>
+  </div>
+</div>
+

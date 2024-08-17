@@ -1,0 +1,67 @@
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.bg-gray-900 {
+  background-color: #1a202c;
+}
+
+.bg-gray-800 {
+  background-color: #2d3748;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+.text-gray-400 {
+  color: #cbd5e0;
+}
+
+.text-gray-300 {
+  color: #e2e8f0;
+}
+
+.text-red-400 {
+  color: #f56565;
+}
+
+.text-blue-500 {
+  background-color: #4299e1;
+}
+
+.text-blue-600:hover {
+  background-color: #3182ce;
+}
+
+.flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.transition {
+  transition: all 0.2s;
+}
+
+.focus\:outline-none:focus {
+  outline: 0;
+}
