@@ -1,6 +1,9 @@
-# Client
+# EmployeeCo
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
+This project frontend was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
+
+Employee Co is an mini Sass Employee and task mangement software developed through Angular + Typescript on Frontend and C# .net on backend maintaining a MySQL database on AWS RDS
+
 
 ## Development server
 
