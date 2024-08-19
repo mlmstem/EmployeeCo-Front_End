@@ -6,29 +6,42 @@ Employee Co is an mini Sass Employee and task mangement software developed throu
 
 
 
-## Tech stacks:
+## Tech Stacks
 
-**UI** :  Angular material UI, Styling: Tailwind CSS.  
+### UI
+- **Angular Material UI**
+- **Styling:** Tailwind CSS
 
+### Front-End
+- **Framework:** Angular, TypeScript
+- **Payment Integration:** PayPal API
+- **Forum Management:** OpenAI API, Disqus API
+- **Security:** Role-guard
 
-**Front-End**:   Angular, Typescript, Payment integration on Frontend: Paypal API, Frontend Forum management: OpenAI API, Disqus API. security: role-guard.   
+### Back-End
+- **Language:** C#, .NET
+- **Security:** JWT Bearer Authorization
+- **Data Management:** OpenAI API
+- **Database:** SQL Server, MySQL (RDS) managed on MySQL Workbench
 
+### DevOps
+- **Platform:** AWS
+- **Front-End:** Deployed on S3 buckets with auto-scaling
+- **Back-End:** Dockerized and deployed on EC2 instance under VPC route tables
 
-**Back-End**:   C#, .NET, Security: JWT Bearer Authorization, Backend-data Management: OpenAI api. Database: sqlserver MySQL RDS database managed on MySQL workbench.
+---
 
+## Product Overview
 
-**DEVOPS**:   AWS,   front-end is deployed on S3 buckets uses auto-scaling, Backend is Dockerized and deployed on EC2 instance under VPC routes tables.  
+![First Image](src/assets/Readme1.png)  
+![Second Image](src/assets/Readme2.png)
 
+**EmployeeCo** is a comprehensive platform allowing admins to manage employees and users to manage their tasks. The dashboard provides detailed analysis of employee performance, including completion rates and task rating scores.
 
-
-## Product-Overview:
-
-
-
-
-
-
-
+### Key Features:
+- Admins can rate employees on task completion, manage user roles, assignments, and contact information.
+- **Pro and Plus** subscriptions allow for file storage uploads.
+- The integrated forum enables troubleshooting and discussion, with options for public or anonymous posts. Anonymous posts are restricted to company visibility, while public posts are processed through AI for recommendations to employees in other companies facing similar tasks.
 
 
 
