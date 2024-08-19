@@ -29,6 +29,12 @@ Employee Co is an mini Sass Employee and task mangement software developed throu
 - **Front-End:** Deployed on S3 buckets with auto-scaling
 - **Back-End:** Dockerized and deployed on EC2 instance under VPC route tables
 
+### Testings:
+**FrontEnd** Karma
+**Backend**  API tested with Swagger and Postman, Unit testing with NUnit
+
+
+
 ---
 
 ## Product Overview
