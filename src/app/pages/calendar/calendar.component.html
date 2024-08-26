@@ -1,1 +1,101 @@
-<p>calendar works!</p>
+<div class="bg-slate-600">
+  <div class="container">
+    <div class="left">
+      <div class="calendar">
+        <div class="month">
+          <button (click)="prevMonth()" class="prev">&lt;</button>
+          <div class="date">{{ months[month] }} {{ year }}</div>
+          <button (click)="nextMonth()" class="next">&gt;</button>
+        </div>
+        <div class="weekdays">
+          <div>Sun</div>
+          <div>Mon</div>
+          <div>Tue</div>
+          <div>Wed</div>
+          <div>Thu</div>
+          <div>Fri</div>
+          <div>Sat</div>
+        </div>
+        <div class="days">
+          <div
+            *ngFor="let day of calendarDays; let i = index"
+            [ngClass]="{
+              'prev-date': day.prevMonth,
+              'next-date': day.nextMonth,
+              today: day.isToday,
+              active: activeDay === day.date && !day.prevMonth && !day.nextMonth,
+              event: day.hasEvent
+            }"
+            class="day transition-colors duration-200 cursor-pointer hover:bg-purple-500 hover:text-white active:bg-purple-700 active:text-white"
+            (click)="selectDay(day)"
+          >
+            <div class="relative">
+              {{ day.date }}
+              <ng-container *ngIf="day.dotVisible">
+                <div
+                  *ngFor="let task of day.events; let i = index"
+                  class="task-indicator absolute rounded-full"
+                  [ngStyle]="{
+                    'width': '1rem',
+                    'height': '1rem',
+                    'background-color': task.highPriority ? 'orange' : 'green',
+                    'top': '-10%',
+                    'left': '50%',
+                    'transform': 'translate(-50%, calc(0% + 1.5rem))'
+                  }">
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div class="goto-today">
+          <div class="goto">
+            <input type="text" [(ngModel)]="gotoDateInput" placeholder="mm/yyyy" class="date-input" />
+            <button (click)="gotoDate()" class="goto-btn">Go</button>
+          </div>
+          <button (click)="goToToday()" class="today-btn">Today</button>
+        </div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="today-date">
+        <div class="event-day text-2xl font-bold">{{ dayName }}</div>
+        <div class="event-date text-gray-600">{{ activeDay }} {{ months[month] }} {{ year }}</div>
+      </div>
+      <div class="events flex flex-col p-4 space-y-4 relative h-full">
+        <h3 *ngIf="!selectedDayHasEvents()" class="no-event absolute inset-0 flex items-center justify-center text-center font-bold relative">No Events</h3>
+        <div *ngFor="let event of getEventsForActiveDay()" class="task-card bg-slate-600 p-4 rounded shadow mx-4">
+          <div class="font-bold">{{ event.title }}</div>
+          <div class="text-sm text-gray-300">Expected Hours: {{ event.expectedHours || 'N/A' }}</div>
+          <div class="text-sm text-gray-300">Roles: {{ event.roles.join(', ') || 'N/A' }}</div>
+        </div>
+      </div>
+      <div class="add-event-wrapper">
+        <div class="add-event-header">
+          <div class="title">Add Event</div>
+          <button (click)="toggleAddEventWrapper()" class="close">x</button>
+        </div>
+        <div class="add-event-body">
+          <div class="add-event-input">
+            <input [(ngModel)]="eventTitle" type="text" placeholder="Event Name" class="event-name" />
+          </div>
+        </div>
+        <div class="add-event-footer">
+          <button (click)="addEvent()" class="add-event-btn">Add Event</button>
+        </div>
+      </div>
+    </div>
+    <button class="add-event" (click)="toggleAddEventWrapper()">+</button>
+  </div>
+
+  <div class="credits">
+    <p>
+      Watch Tutorial on Youtube
+      <a href="https://youtu.be/6EVgmpm4z5U" target="_blank">Open Source Coding</a>
+    </p>
+  </div>
+</div>
+
+
+
+

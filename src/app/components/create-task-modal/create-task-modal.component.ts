@@ -1,30 +1,16 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../services/auth.service';
 import { CreateTaskRequest } from '../../interfaces/create-task-request';
 import { UserDetail } from '../../interfaces/user-detail';
-// import { CommonModule } from '@angular/common';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-create-task-modal',
   templateUrl: './create-task-modal.component.html',
-  styleUrls: ['./create-task-modal.component.css'],
+  styleUrls: ['./create-task-modal.component.css', '../angular-material.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatButtonModule,
-    MatIconModule,
-  ],
+  imports: [CommonModule, FormsModule],
 })
 export class CreateTaskModalComponent implements OnInit {
   @Output() close = new EventEmitter<void>();
@@ -43,6 +29,7 @@ export class CreateTaskModalComponent implements OnInit {
 
   selectedAssignees: UserDetail[] = [];
   users: UserDetail[] = [];
+  dropdownOpen = false;
 
   constructor(private authService: AuthService) {}
 
@@ -63,8 +50,7 @@ export class CreateTaskModalComponent implements OnInit {
   createTask() {
     this.task.relevantEmployees = this.selectedAssignees.map((user) => user.fullName);
     this.task.relevantEmployeeEmails = this.selectedAssignees.map((user) => user.email);
-    this.task.roles = this.selectedAssignees.map((user) => user.roles?.join(', ')); // Assuming roles is an array
-
+    this.task.roles = this.selectedAssignees.map((user) => user.roles?.join(', '));
 
     this.authService.createTask(this.task).subscribe({
       next: () => {
@@ -78,7 +64,25 @@ export class CreateTaskModalComponent implements OnInit {
   }
 
   closeModal() {
-    this.close.emit();  // Correctly emit the close event
+    this.close.emit();
   }
+
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  toggleAssignee(user: UserDetail) {
+    const index = this.selectedAssignees.indexOf(user);
+    if (index > -1) {
+      this.selectedAssignees.splice(index, 1);
+    } else {
+      this.selectedAssignees.push(user);
+    }
+  }
+
+  isAssigneeSelected(user: UserDetail): boolean {
+    return this.selectedAssignees.includes(user);
+  }
+
 }
 

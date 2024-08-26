@@ -1,0 +1,40 @@
+.mwl-calendar-month-view {
+  background-color: #3b3b3b; /* Slightly lighter dark background for the whole calendar */
+}
+
+.mwl-calendar-day-cell {
+  background-color: #2e2e2e; /* Dark background for each day cell */
+  color: #2e2e2e; /* Ensure text is white */
+  border-color: #444444; /* Border color between day cells */
+}
+
+.mwl-calendar-day-cell:hover {
+  background-color: #444444; /* Slightly lighter background on hover */
+}
+
+.mwl-calendar-day-cell .cal-day-number {
+  color: #2e2e2e; /* White color for the day number */
+}
+
+.mwl-calendar-event {
+  color: #2e2e2e; /* Ensure event text is readable */
+}
+
+.mwl-calendar-event-title {
+  color: #ffffff; /* Ensure event title text is white */
+}
+
+.mwl-calendar-header {
+  background-color: #2e2e2e; /* Dark background for the header */
+  color: #ffffff; /* White text for the header */
+}
+
+.mwl-calendar-week-view-header {
+  background-color: #3b3b3b; /* Darker background for the week view header */
+  color: #ffffff; /* White text for the week view header */
+}
+
+.mwl-calendar-day-view-event {
+  background-color: #2e2e2e; /* Dark background for day view events */
+  color: #ffffff; /* Ensure text is readable */
+}

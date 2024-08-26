@@ -1,3 +1,98 @@
+/* Define your primary, accent, and warn colors */
+:root {
+  --mat-primary: #3f51b5; /* Indigo */
+  --mat-primary-light: #7986cb;
+  --mat-primary-dark: #303f9f;
+  --mat-primary-contrast: #ffffff;
+
+  --mat-accent: #e91e63; /* Pink */
+  --mat-accent-light: #ff6090;
+  --mat-accent-dark: #b0003a;
+  --mat-accent-contrast: #ffffff;
+
+  --mat-warn: #f44336; /* Red */
+  --mat-warn-light: #e57373;
+  --mat-warn-dark: #d32f2f;
+  --mat-warn-contrast: #ffffff;
+}
+
+/* Apply the custom theme colors to Angular Material components */
+.mat-button,
+.mat-icon-button,
+.mat-raised-button,
+.mat-fab,
+.mat-mini-fab {
+  background-color: var(--mat-primary);
+  color: var(--mat-primary-contrast);
+}
+
+.mat-button:hover,
+.mat-icon-button:hover,
+.mat-raised-button:hover,
+.mat-fab:hover,
+.mat-mini-fab:hover {
+  background-color: var(--mat-primary-dark);
+}
+
+.mat-button:disabled,
+.mat-icon-button:disabled,
+.mat-raised-button:disabled,
+.mat-fab:disabled,
+.mat-mini-fab:disabled {
+  background-color: var(--mat-primary-light);
+  color: var(--mat-primary-contrast);
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-radio-checked.mat-accent .mat-radio-outer-circle,
+.mat-radio-checked.mat-accent .mat-radio-inner-circle {
+  background-color: var(--mat-accent);
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-radio-checked.mat-accent .mat-radio-outer-circle {
+  border-color: var(--mat-accent);
+}
+
+.mat-checkbox-checked.mat-warn .mat-checkbox-background,
+.mat-radio-checked.mat-warn .mat-radio-outer-circle,
+.mat-radio-checked.mat-warn .mat-radio-inner-circle {
+  background-color: var(--mat-warn);
+}
+
+.mat-checkbox-checked.mat-warn .mat-checkbox-background,
+.mat-radio-checked.mat-warn .mat-radio-outer-circle {
+  border-color: var(--mat-warn);
+}
+
+.mat-input-element {
+  color: var(--mat-primary);
+}
+
+.mat-form-field-label,
+.mat-select-value {
+  color: var(--mat-primary);
+}
+
+.mat-input-placeholder {
+  color: var(--mat-primary-light);
+}
+
+/* Additional customizations for other Angular Material components */
+.mat-slider-thumb,
+.mat-slider-track-fill {
+  background-color: var(--mat-accent);
+}
+
+.mat-progress-bar-buffer {
+  background-color: var(--mat-primary-light);
+}
+
+.mat-progress-bar-fill {
+  background-color: var(--mat-primary);
+}
+
+
 .max-w-3xl {
   max-width: 48rem;
 }

@@ -2,7 +2,7 @@ import { AuthService } from './../../services/auth.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { RoleService } from './../../services/role.service';
-import { Component, inject } from '@angular/core';
+import { Component, inject,  ViewEncapsulation } from '@angular/core';
 import { RoleFormComponent } from '../../components/role-form/role-form.component';
 import { RoleCreateRequest } from '../../interfaces/role-create-requests';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -15,9 +15,10 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-role',
   standalone: true,
+  encapsulation: ViewEncapsulation.None,
   imports: [RoleFormComponent, RoleListComponent, MatSelectModule, MatInputModule, AsyncPipe, MatSnackBarModule, MatIconModule, CommonModule, FormsModule],
   templateUrl: './role.component.html',
-  styleUrls: ['./role.component.css']
+  styleUrls: ['./role.component.css'],
 })
 export class RoleComponent {
   RoleService = inject(RoleService);
