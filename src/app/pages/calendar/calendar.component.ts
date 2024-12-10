@@ -20,23 +20,28 @@ interface CalendarDay {
   styleUrls: ['./calendar.component.css'],
   encapsulation: ViewEncapsulation.Emulated,
   standalone: true,
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule],
 })
 export class CalendarComponent implements OnInit {
-  today = new Date();
-  activeDay: number;
+  today: Date = new Date();
+  activeDay: number = this.today.getDate();
   month: number = this.today.getMonth();
   year: number = this.today.getFullYear();
-  dayName: string = '';
+  dayName: string = this.today.toLocaleDateString('en-US', { weekday: 'long' });
   gotoDateInput: string = '';
   eventTitle: string = '';
+  eventDescription: string = '';
+  eventExpectedHours: number = 0;
+  showAddEventForm: boolean = false;
+
   months: string[] = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December',
   ];
+
   calendarDays: CalendarDay[] = [];
   events: { [key: string]: Task[] } = {};
-  previousSelectedDay: CalendarDay | null = null;  // Track the previous selected day
+  previousSelectedDay: CalendarDay | null = null;
 
   constructor(private authService: AuthService) {}
 
@@ -68,7 +73,7 @@ export class CalendarComponent implements OnInit {
         isToday: false,
         hasEvent: false,
         events: [],
-        dotVisible: true,
+        dotVisible: false,
       });
     }
 
@@ -95,7 +100,7 @@ export class CalendarComponent implements OnInit {
         isToday: false,
         hasEvent: false,
         events: [],
-        dotVisible: true,
+        dotVisible: false,
       });
     }
 
@@ -105,7 +110,7 @@ export class CalendarComponent implements OnInit {
   }
 
   mapTasksToEvents(tasks: Task[]): void {
-    tasks.forEach(task => {
+    tasks.forEach((task) => {
       const taskDate = new Date(task.deadline); // Assuming task.deadline is in ISO format or similar
       const eventKey = `${taskDate.getFullYear()}-${taskDate.getMonth() + 1}-${taskDate.getDate()}`;
       if (!this.events[eventKey]) {
@@ -116,7 +121,7 @@ export class CalendarComponent implements OnInit {
   }
 
   updateCalendarWithEvents(): void {
-    this.calendarDays.forEach(day => {
+    this.calendarDays.forEach((day) => {
       const eventKey = `${this.year}-${this.month + 1}-${day.date}`;
       day.hasEvent = this.events[eventKey]?.length > 0;
       day.events = this.events[eventKey] || [];
@@ -124,11 +129,6 @@ export class CalendarComponent implements OnInit {
   }
 
   selectDay(day: CalendarDay): void {
-    if (this.previousSelectedDay) {
-      // Reverse the dot visibility of the previously selected day
-      this.previousSelectedDay.dotVisible = !this.previousSelectedDay.dotVisible;
-    }
-
     if (day.prevMonth) {
       this.prevMonth();
     } else if (day.nextMonth) {
@@ -137,8 +137,6 @@ export class CalendarComponent implements OnInit {
       this.activeDay = day.date;
       this.dayName = new Date(this.year, this.month, this.activeDay).toLocaleDateString('en-US', { weekday: 'long' });
       this.updateEvents();
-      day.dotVisible = !day.dotVisible;
-      this.previousSelectedDay = day;  // Update the previously selected day
     }
   }
 
@@ -150,7 +148,6 @@ export class CalendarComponent implements OnInit {
     }
     this.initCalendar();
     this.updateCalendarWithEvents();
-    this.previousSelectedDay = null;  // Reset previous selected day on month change
   }
 
   nextMonth(): void {
@@ -161,7 +158,6 @@ export class CalendarComponent implements OnInit {
     }
     this.initCalendar();
     this.updateCalendarWithEvents();
-    this.previousSelectedDay = null;  // Reset previous selected day on month change
   }
 
   goToToday(): void {
@@ -172,11 +168,10 @@ export class CalendarComponent implements OnInit {
     this.initCalendar();
     this.updateCalendarWithEvents();
     this.updateEvents();
-    this.previousSelectedDay = null;  // Reset previous selected day on going to today
   }
 
   gotoDate(): void {
-    const dateArr = this.gotoDateInput.split("/");
+    const dateArr = this.gotoDateInput.split('/');
     if (dateArr.length === 2) {
       const month = parseInt(dateArr[0], 10);
       const year = parseInt(dateArr[1], 10);
@@ -188,53 +183,46 @@ export class CalendarComponent implements OnInit {
         return;
       }
     }
-    alert("Invalid Date");
+    alert('Invalid Date');
   }
 
   toggleAddEventWrapper(): void {
-    const addEventWrapper = document.querySelector('.add-event-wrapper') as HTMLElement;
-    addEventWrapper.classList.toggle('active');
+    this.showAddEventForm = !this.showAddEventForm;
   }
 
   addEvent(): void {
+    if (!this.eventTitle.trim()) {
+      alert('Event title cannot be empty!');
+      return;
+    }
+
     const eventKey = `${this.year}-${this.month + 1}-${this.activeDay}`;
     if (!this.events[eventKey]) {
       this.events[eventKey] = [];
     }
+
     this.events[eventKey].push({
       id: Date.now(),
       title: this.eventTitle,
-      description: '',
+      description: this.eventDescription,
       isCompleted: false,
-      expectedHours: 0,
+      expectedHours: this.eventExpectedHours,
       deadline: new Date(this.year, this.month, this.activeDay).toISOString(),
       highPriority: false,
-      roles: []
+      roles: [],
     });
+
     this.eventTitle = '';
-    this.toggleAddEventWrapper();
+    this.eventDescription = '';
+    this.eventExpectedHours = 0;
+
+    this.showAddEventForm = false;
+    this.updateCalendarWithEvents();
     this.updateEvents();
   }
 
   updateEvents(): void {
-    const eventKey = `${this.year}-${this.month + 1}-${this.activeDay}`;
-    const eventContainer = document.querySelector('.events') as HTMLElement;
-    if (this.events[eventKey] && this.events[eventKey].length > 0) {
-      eventContainer.innerHTML = `
-        <div class="text-lg font-bold mx-4">Tasks for Today:</div>
-        ${this.events[eventKey]
-          .map(event => `
-            <div class="event-card p-4 border rounded-lg mb-2 bg-slate-600 mx-4" >
-              <div class="font-bold">${event.title}</div>
-              <div class="text-sm text-gray-300">Expected Hours: ${event.expectedHours || 'N/A'}</div>
-              <div class="text-sm text-gray-300">Roles: ${event.roles.join(', ') || 'N/A'}</div>
-            </div>
-          `)
-          .join('')}
-      `;
-    } else {
-      eventContainer.innerHTML = `<div class="no-event">No Events</div>`;
-    }
+    this.updateCalendarWithEvents();
   }
 
   selectedDayHasEvents(): boolean {
@@ -246,8 +234,8 @@ export class CalendarComponent implements OnInit {
     const eventKey = `${this.year}-${this.month + 1}-${this.activeDay}`;
     return this.events[eventKey] || [];
   }
-
 }
+
 
 
 

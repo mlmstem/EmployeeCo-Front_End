@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns'; // Assuming you're using date-fns as the adapter
 
+
 @Component({
   selector: 'app-root',
   standalone: true,

@@ -1,14 +1,18 @@
-<app-navbar />
+<app-navbar></app-navbar>
 
-<div class="flex">
-  <div *ngIf="isLoggedIn" class="sticky top-16 z-110 bg-opacity-90">
-
-    <app-sidebar [isCollapsed]="isSidebarCollapsed" (toggleSidebar)="toggleSidebar()"></app-sidebar>
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <div
+    class="h-screen sticky top-0"
+  >
+    <app-sidebar></app-sidebar>
   </div>
 
+  <!-- Main Content -->
   <div class="flex-grow">
     <router-outlet></router-outlet>
   </div>
 </div>
+
 
 

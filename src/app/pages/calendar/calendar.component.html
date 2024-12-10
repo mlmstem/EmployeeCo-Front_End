@@ -1,13 +1,19 @@
-<div class="bg-slate-600">
-  <div class="container">
-    <div class="left">
-      <div class="calendar">
-        <div class="month">
-          <button (click)="prevMonth()" class="prev">&lt;</button>
-          <div class="date">{{ months[month] }} {{ year }}</div>
-          <button (click)="nextMonth()" class="next">&gt;</button>
+<div class="bg-slate-900 min-h-screen flex flex-col items-center pt-5">
+  <!-- Title -->
+  <h2 class="text-3xl font-bold text-gray-200 mb-2">My Calendar Schedule</h2>
+
+  <div class="container max-w-7xl flex flex-col md:flex-row w-full bg-gray-800 rounded-lg overflow-hidden shadow-md scale-90">
+    <!-- Left Section -->
+    <div class="left w-full md:w-3/5 p-5">
+      <div class="calendar bg-white rounded-lg shadow p-5">
+        <!-- Month Navigation -->
+        <div class="month flex justify-between items-center mb-5">
+          <button (click)="prevMonth()" class="prev text-gray-500 hover:text-purple-500">&lt;</button>
+          <div class="date text-xl font-semibold text-gray-700">{{ months[month] }} {{ year }}</div>
+          <button (click)="nextMonth()" class="next text-gray-500 hover:text-purple-500">&gt;</button>
         </div>
-        <div class="weekdays">
+        <!-- Weekdays -->
+        <div class="weekdays grid grid-cols-7 text-center text-gray-600 font-medium mb-3">
           <div>Sun</div>
           <div>Mon</div>
           <div>Tue</div>
@@ -16,7 +22,8 @@
           <div>Fri</div>
           <div>Sat</div>
         </div>
-        <div class="days">
+        <!-- Days -->
+        <div class="days grid grid-cols-7 gap-2">
           <div
             *ngFor="let day of calendarDays; let i = index"
             [ngClass]="{
@@ -26,7 +33,7 @@
               active: activeDay === day.date && !day.prevMonth && !day.nextMonth,
               event: day.hasEvent
             }"
-            class="day transition-colors duration-200 cursor-pointer hover:bg-purple-500 hover:text-white active:bg-purple-700 active:text-white"
+            class="day flex items-center justify-center h-20 border border-gray-200 text-purple-500 hover:bg-purple-500 hover:text-white cursor-pointer rounded-md"
             (click)="selectDay(day)"
           >
             <div class="relative">
@@ -42,59 +49,113 @@
                     'top': '-10%',
                     'left': '50%',
                     'transform': 'translate(-50%, calc(0% + 1.5rem))'
-                  }">
-                </div>
+                  }"
+                ></div>
               </ng-container>
             </div>
           </div>
         </div>
-        <div class="goto-today">
-          <div class="goto">
-            <input type="text" [(ngModel)]="gotoDateInput" placeholder="mm/yyyy" class="date-input" />
-            <button (click)="gotoDate()" class="goto-btn">Go</button>
+        <!-- Go to Today -->
+        <div class="goto-today flex justify-between mt-5">
+          <div class="goto flex items-center border border-purple-500 rounded-md overflow-hidden">
+            <input
+              type="text"
+              [(ngModel)]="gotoDateInput"
+              placeholder="mm/yyyy"
+              class="date-input w-24 px-2 py-1 text-gray-600 focus:outline-none"
+            />
+            <button (click)="gotoDate()" class="goto-btn px-3 py-1 bg-purple-500 text-white hover:bg-purple-700">
+              Go
+            </button>
           </div>
-          <button (click)="goToToday()" class="today-btn">Today</button>
+          <button
+            (click)="goToToday()"
+            class="today-btn px-3 py-1 bg-purple-500 text-white rounded-md hover:bg-purple-700"
+          >
+            Today
+          </button>
         </div>
       </div>
     </div>
-    <div class="right">
-      <div class="today-date">
-        <div class="event-day text-2xl font-bold">{{ dayName }}</div>
-        <div class="event-date text-gray-600">{{ activeDay }} {{ months[month] }} {{ year }}</div>
+
+    <!-- Right Section -->
+    <div class="right w-full md:w-2/5 p-5 flex flex-col items-center">
+      <div class="today-date text-center mb-5">
+        <div class="event-day text-2xl font-bold text-gray-100">{{ dayName }}</div>
+        <div class="event-date text-gray-400">{{ activeDay }} {{ months[month] }} {{ year }}</div>
       </div>
-      <div class="events flex flex-col p-4 space-y-4 relative h-full">
-        <h3 *ngIf="!selectedDayHasEvents()" class="no-event absolute inset-0 flex items-center justify-center text-center font-bold relative">No Events</h3>
-        <div *ngFor="let event of getEventsForActiveDay()" class="task-card bg-slate-600 p-4 rounded shadow mx-4">
-          <div class="font-bold">{{ event.title }}</div>
+      <div
+        class="events flex flex-col p-4 space-y-4 relative w-full h-full max-h-[600px] overflow-y-auto bg-slate-700 rounded-lg shadow-md"
+      >
+        <h3
+          *ngIf="!selectedDayHasEvents()"
+          class="no-event absolute inset-0 flex items-center justify-center text-center font-bold text-gray-400"
+        >
+          No Events
+        </h3>
+        <div
+          *ngFor="let event of getEventsForActiveDay()"
+          class="task-card bg-slate-600 p-4 rounded shadow mx-4"
+        >
+          <div class="font-bold text-white">{{ event.title }}</div>
           <div class="text-sm text-gray-300">Expected Hours: {{ event.expectedHours || 'N/A' }}</div>
           <div class="text-sm text-gray-300">Roles: {{ event.roles.join(', ') || 'N/A' }}</div>
         </div>
       </div>
-      <div class="add-event-wrapper">
-        <div class="add-event-header">
-          <div class="title">Add Event</div>
-          <button (click)="toggleAddEventWrapper()" class="close">x</button>
+      <button
+        class="add-event bg-purple-500 text-white p-3 rounded-full shadow mt-5 hover:bg-purple-700"
+        (click)="toggleAddEventWrapper()"
+      >
+        +
+      </button>
+
+      <!-- Add Event Form -->
+      <div *ngIf="showAddEventForm" class="add-event-form bg-gray-800 text-white p-5 rounded-lg shadow mt-5">
+        <h3 class="text-lg font-bold mb-3">Add New Event</h3>
+
+        <div class="mb-3">
+          <label class="block text-sm mb-1">Event Title:</label>
+          <input
+            type="text"
+            [(ngModel)]="eventTitle"
+            class="w-full px-3 py-2 rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
         </div>
-        <div class="add-event-body">
-          <div class="add-event-input">
-            <input [(ngModel)]="eventTitle" type="text" placeholder="Event Name" class="event-name" />
-          </div>
+
+        <div class="mb-3">
+          <label class="block text-sm mb-1">Description:</label>
+          <textarea
+            [(ngModel)]="eventDescription"
+            class="w-full px-3 py-2 rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+          </textarea>
         </div>
-        <div class="add-event-footer">
-          <button (click)="addEvent()" class="add-event-btn">Add Event</button>
+
+        <div class="mb-3">
+          <label class="block text-sm mb-1">Expected Hours:</label>
+          <input
+            type="number"
+            [(ngModel)]="eventExpectedHours"
+            class="w-full px-3 py-2 rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+        </div>
+
+        <div class="flex items-center justify-between">
+          <button
+            (click)="addEvent()"
+            class="px-4 py-2 bg-purple-500 rounded-md hover:bg-purple-700 focus:outline-none">
+            Add Event
+          </button>
+          <button
+            (click)="toggleAddEventWrapper()"
+            class="px-4 py-2 bg-gray-500 rounded-md hover:bg-gray-700 focus:outline-none">
+            Cancel
+          </button>
         </div>
       </div>
     </div>
-    <button class="add-event" (click)="toggleAddEventWrapper()">+</button>
-  </div>
-
-  <div class="credits">
-    <p>
-      Watch Tutorial on Youtube
-      <a href="https://youtu.be/6EVgmpm4z5U" target="_blank">Open Source Coding</a>
-    </p>
   </div>
 </div>
+
 
 
 
