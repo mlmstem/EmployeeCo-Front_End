@@ -74,8 +74,6 @@ export class TasksComponent implements OnInit {
     this.ongoingTasks = this.ongoingTasks.filter(task => !task.isCompleted);
   }
 
-
-
 }
 
 

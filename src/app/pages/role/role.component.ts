@@ -2,7 +2,7 @@ import { AuthService } from './../../services/auth.service';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { RoleService } from './../../services/role.service';
-import { Component, inject,  ViewEncapsulation } from '@angular/core';
+import { Component, inject,  OnInit,  ViewEncapsulation } from '@angular/core';
 import { RoleFormComponent } from '../../components/role-form/role-form.component';
 import { RoleCreateRequest } from '../../interfaces/role-create-requests';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -11,6 +11,10 @@ import { RoleListComponent } from '../../components/role-list/role-list.componen
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { Role } from '../../interfaces/role';
+import { Observable } from 'rxjs';
+
+
 
 @Component({
   selector: 'app-role',
@@ -20,22 +24,32 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './role.component.html',
   styleUrls: ['./role.component.css'],
 })
-export class RoleComponent {
+
+export class RoleComponent implements OnInit {
   RoleService = inject(RoleService);
   AuthService = inject(AuthService);
+  snackBar = inject(MatSnackBar);
+
   errorMessage = '';
   role: RoleCreateRequest = {} as RoleCreateRequest;
-  role$ = this.RoleService.getRoles();
+
+  // Observables for roles and users
+  role$!: Observable<Role[]>;
   users$ = this.AuthService.getAll();
+
+  // Selected role and user
   selectedUser: string = '';
   selectedRole: string = '';
 
-  snackBar = inject(MatSnackBar);
+  ngOnInit(): void {
+    // Fetch roles and subscribe to updates
+    this.role$ = this.RoleService.getRoles();
+    this.RoleService.fetchRoles(); // Ensure roles are fetched on initialization
+  }
 
   createRole(role: RoleCreateRequest) {
     this.RoleService.createRole(role).subscribe({
-      next: (response: { message: string }) => {
-        this.role$ = this.RoleService.getRoles();
+      next: () => {
         this.snackBar.open('Role Created Successfully', 'Ok', {
           duration: 3000,
         });
@@ -55,7 +69,6 @@ export class RoleComponent {
   deleteRole(id: string) {
     this.RoleService.delete(id).subscribe({
       next: () => {
-        this.role$ = this.RoleService.getRoles();
         this.snackBar.open('Role Deleted Successfully', 'Close', {
           duration: 3000,
         });
@@ -71,7 +84,6 @@ export class RoleComponent {
   assignRole() {
     this.RoleService.assignRole(this.selectedUser, this.selectedRole).subscribe({
       next: () => {
-        this.role$ = this.RoleService.getRoles();
         this.snackBar.open('Role Assigned Successfully', 'Close', {
           duration: 3000,
         });
@@ -84,5 +96,4 @@ export class RoleComponent {
     });
   }
 }
-
 

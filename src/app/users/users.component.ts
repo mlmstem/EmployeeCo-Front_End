@@ -90,8 +90,19 @@ export class UsersComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-      // You may refresh the list or take some other action
+      if (result) {
+        console.log('Submitted employee data:', result); // Log the result to check the payload
+        this.authService.createEmployee(result).subscribe(
+          newEmployee => {
+            this.authService.addUserToCache(newEmployee); // Update cache
+            this.updateFilteredUsers(); // Refresh the filtered list
+            console.log('Employee added successfully and reflected in cache.');
+          },
+          error => {
+            console.error('Error adding employee:', error); // Log the error for debugging
+          }
+        );
+      }
     });
   }
 
@@ -102,8 +113,13 @@ export class UsersComponent {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-      // You may refresh the list or take some other action
+      if (result) {
+        this.authService.updateEmployee(result).subscribe(updatedEmployee => {
+          this.authService.updateUserCache(updatedEmployee); // Update the cache
+          this.updateFilteredUsers(); // Refresh the filtered list
+        });
+      }
+
     });
   }
 }

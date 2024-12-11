@@ -3,8 +3,9 @@
 >
   <!-- Header -->
   <div class="flex justify-between items-center p-4 border-b border-gray-700">
-    <h1 class="text-2xl font-bold">Forum</h1>
-    <button class="px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-700">New Post</button>
+    <h1 class="text-2xl font-bold">Company Forum</h1>
+    <button class="px-4 py-2 bg-blue-600 rounded-md hover:bg-blue-700"
+    (click)="showCreatePostModal()">New Post</button>
   </div>
 
   <!-- Main Content -->
@@ -14,17 +15,27 @@
       <!-- Filters -->
       <div class="flex justify-between items-center mb-4">
         <div class="flex gap-4">
-          <button class="text-blue-400 border-b-2 border-blue-400 pb-1">All</button>
-          <button class="text-gray-400 hover:text-white">Unanswered</button>
-        </div>
-        <div class="flex gap-4">
-          <button class="text-blue-400 border-b-2 border-blue-400 pb-1">Latest</button>
-          <button class="text-gray-400 hover:text-white">Popular</button>
+          <button
+            (click)="switchTab('All')"
+            [class.text-blue-400]="activeTab === 'All'"
+            [class.border-b-2]="activeTab === 'All'"
+            [class.border-blue-400]="activeTab === 'All'"
+            class="pb-1">
+            All
+          </button>
+          <button
+            (click)="switchTab('Unanswered')"
+            [class.text-blue-400]="activeTab === 'Unanswered'"
+            [class.border-b-2]="activeTab === 'Unanswered'"
+            [class.border-blue-400]="activeTab === 'Unanswered'"
+            class="pb-1">
+            Unanswered
+          </button>
         </div>
       </div>
 
       <!-- Posts -->
-      <div *ngFor="let post of posts" class="bg-slate-700 p-4 rounded-md mb-4">
+      <div *ngFor="let post of filteredPosts" class="bg-slate-700 p-4 rounded-md mb-4">
         <div class="flex justify-between items-center">
           <div>
             <h3 class="text-lg font-semibold">{{ post.title }}</h3>
@@ -46,6 +57,12 @@
           >
             <mat-icon>comment</mat-icon> View Comments
           </button>
+          <button
+            (click)="showCommentInput(post.id)"
+            class="text-green-400 hover:text-green-500 flex items-center gap-1"
+          >
+          Add Comment
+          </button>
         </div>
 
         <!-- Comments Section -->
@@ -56,9 +73,9 @@
           </div>
 
           <!-- Add Comment -->
-          <div class="flex gap-2 mt-2">
+          <div class="flex gap-2 mt-2" *ngIf="activeInputPostId === post.id">
             <input
-              [(ngModel)]="newComment"
+              [(ngModel)]="commentInputs[post.id]"
               placeholder="Write a comment..."
               class="flex-grow p-2 rounded-md bg-slate-500 text-white"
             />
@@ -71,16 +88,19 @@
           </div>
         </div>
       </div>
-
-      <!-- Pagination -->
-      <div class="flex justify-between items-center text-sm text-gray-400 mt-6">
-        <button class="px-4 py-2 rounded-md bg-slate-600 hover:bg-slate-500">Older Threads</button>
-        <span>Page 2 of 58</span>
-        <button class="px-4 py-2 rounded-md bg-slate-600 hover:bg-slate-500">Newer Threads</button>
-      </div>
     </div>
   </div>
+
+  <app-create-post-modal
+    *ngIf="isCreatePostModalVisible"
+    [categories]="categoryNames"
+    (postCreated)="handlePostCreated()"
+    (closeModalEvent)="hideCreatePostModal()"
+  ></app-create-post-modal>
+
 </div>
+
+
 
 
 

@@ -1,0 +1,26 @@
+<div class="modal-container">
+  <h2 class="text-2xl font-bold text-white mb-4">Create New Post</h2>
+  <form (ngSubmit)="createPost(form)" #form="ngForm">
+    <div class="mb-4">
+      <label class="block text-gray-300">Title</label>
+      <input type="text" [(ngModel)]="post.title" name="title" class="w-full p-2 rounded bg-gray-700 text-white" required />
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-300">Category</label>
+      <select [(ngModel)]="post.category" name="category" class="w-full p-2 rounded bg-gray-700 text-white" required>
+        <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+      </select>
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-300">Content</label>
+      <textarea [(ngModel)]="post.content" name="content" class="w-full p-2 rounded bg-gray-700 text-white" required></textarea>
+    </div>
+    <div class="flex justify-end gap-4">
+      <button type="button" (click)="closeModal()" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700">Cancel</button>
+      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Create Post</button>
+    </div>
+  </form>
+</div>
+
+
+

@@ -28,6 +28,11 @@ export class DashboardComponent implements OnInit {
   overduePercentage: number = 0;
   completedPercentage: number = 0;
 
+  currentPage: number = 1; // Track the current page
+  tasksPerPage: number = 4; // Max tasks per page
+  paginatedTasks: any[] = []; // Tasks to display on the current page
+  totalPages: number = 1; // Total number of pages
+
   constructor(private authService: AuthService) {
     const currentDate = new Date();
     this.previousMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1).toLocaleString('default', { month: 'long' });
@@ -61,7 +66,32 @@ export class DashboardComponent implements OnInit {
       }
 
       this.generateCalendarDates();
+      this.updatePagination();
     });
+  }
+
+  updatePagination(): void {
+    // Calculate total pages
+    this.totalPages = Math.ceil(this.tasksThisMonth.length / this.tasksPerPage);
+
+    // Update tasks for the current page
+    const startIndex = (this.currentPage - 1) * this.tasksPerPage;
+    const endIndex = startIndex + this.tasksPerPage;
+    this.paginatedTasks = this.tasksThisMonth.slice(startIndex, endIndex);
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagination();
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
   }
 
   generateCalendarDates() {

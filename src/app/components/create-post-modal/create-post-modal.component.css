@@ -1,0 +1,23 @@
+/* Full-screen overlay */
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75); /* Semi-transparent background */
+  z-index: 1000; /* Ensure it is on top */
+}
+
+/* Modal Content */
+.modal-container {
+  background-color: #2d3748; /* Slate gray */
+  padding: 2rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  max-width: 28rem; /* Limit modal width */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
